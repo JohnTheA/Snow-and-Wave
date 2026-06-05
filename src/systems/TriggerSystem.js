@@ -88,8 +88,8 @@ const TriggerSystem = {
         scene.villageEntranceX,
         scene.villageEntranceY,
         '⚔ 村庄守护者',
-        { fontSize: '10px', fontFamily: 'monospace', color: '#ffcc00',
-          stroke: '#000000', strokeThickness: 3 }
+        { fontSize: '7px', fontFamily: 'monospace', color: '#ffcc00',
+          stroke: '#000000', strokeThickness: 2 }
       ).setOrigin(0.5).setDepth(5);
       // 全体NPC暖色
       for (const npc of Object.values(npcs)) {

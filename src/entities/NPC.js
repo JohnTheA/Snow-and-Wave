@@ -8,23 +8,23 @@ export default class NPC extends Phaser.GameObjects.Sprite {
     this.setOrigin(0.5, 1);
 
     // Name label above sprite
-    this.nameText = scene.add.text(x, y - 20, name, {
-      fontSize: '9px',
+    this.nameText = scene.add.text(x, y - 18, name, {
+      fontSize: '7px',
       fontFamily: 'monospace',
       color: '#ffffff',
       stroke: '#000000',
-      strokeThickness: 3
+      strokeThickness: 2
     }).setOrigin(0.5, 1);
 
     // Interaction hint
-    this.interactHint = scene.add.text(x, y - 32, 'E键交互', {
-      fontSize: '8px',
+    this.interactHint = scene.add.text(x, y - 26, 'E交互', {
+      fontSize: '6px',
       fontFamily: 'monospace',
       color: '#ffff00',
       stroke: '#000000',
       strokeThickness: 2,
       backgroundColor: '#00000088',
-      padding: { x: 3, y: 2 }
+      padding: { x: 2, y: 1 }
     }).setOrigin(0.5, 1).setVisible(false);
   }
 
@@ -38,8 +38,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
 
   // Keep text anchored to sprite position
   syncText() {
-    this.nameText.setPosition(this.x, this.y - 20);
-    this.interactHint.setPosition(this.x, this.y - 32);
+    this.nameText.setPosition(this.x, this.y - 18);
+    this.interactHint.setPosition(this.x, this.y - 26);
   }
 
   preUpdate(time, delta) {
