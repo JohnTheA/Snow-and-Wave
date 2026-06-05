@@ -203,8 +203,8 @@ export default class WorldScene extends Phaser.Scene {
 
   _buildUI() {
     this.hud = this.add.text(4, 4, '雪与浪 | WASD移动 E交互', {
-      fontSize: '7px',
-      fontFamily: 'monospace',
+      fontSize: '11px',
+      fontFamily: 'Arial, sans-serif',
       color: '#aaccee',
       stroke: '#000000',
       strokeThickness: 2,
@@ -213,8 +213,8 @@ export default class WorldScene extends Phaser.Scene {
     }).setScrollFactor(0).setDepth(10);
 
     this.statusText = this.add.text(4, this.scale.height - 12, '', {
-      fontSize: '6px',
-      fontFamily: 'monospace',
+      fontSize: '10px',
+      fontFamily: 'Arial, sans-serif',
       color: '#88aacc',
       stroke: '#000000',
       strokeThickness: 2
@@ -300,8 +300,8 @@ export default class WorldScene extends Phaser.Scene {
   // 世界事件浮动提示：在世界坐标 (wx, wy) 显示文字后淡出
   showWorldEvent(msg, wx, wy) {
     const txt = this.add.text(wx, wy, msg, {
-      fontSize: '7px',
-      fontFamily: 'monospace',
+      fontSize: '11px',
+      fontFamily: 'Arial, sans-serif',
       color: '#ffffaa',
       stroke: '#000000',
       strokeThickness: 2,

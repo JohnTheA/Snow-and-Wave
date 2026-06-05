@@ -13,7 +13,7 @@ export default class DialogScene extends Phaser.Scene {
     this.choiceButtons = [];
     this.W = 480;
     this.H = 270;
-    this.panelH = 110;
+    this.panelH = 130;
     this.panelY = this.H - this.panelH;
   }
 
@@ -29,19 +29,19 @@ export default class DialogScene extends Phaser.Scene {
 
     // NPC名字
     this.nameText = this.add.text(10, panelY + 7, '', {
-      fontSize: '9px', fontFamily: 'monospace',
+      fontSize: '14px', fontFamily: 'Arial, sans-serif',
       color: '#88ddff', stroke: '#000000', strokeThickness: 2
     });
 
     // 对话内容
     this.bodyText = this.add.text(10, panelY + 22, '', {
-      fontSize: '8px', fontFamily: 'monospace',
+      fontSize: '12px', fontFamily: 'Arial, sans-serif',
       color: '#eeeeff', wordWrap: { width: W - 20 }, lineSpacing: 3
     });
 
     // ESC提示
     this.add.text(W - 6, panelY + 6, 'ESC关闭', {
-      fontSize: '6px', fontFamily: 'monospace', color: '#556677'
+      fontSize: '10px', fontFamily: 'Arial, sans-serif', color: '#556677'
     }).setOrigin(1, 0);
 
     this.input.keyboard.once('keydown-ESC', () => this.closeDialog());
@@ -68,8 +68,8 @@ export default class DialogScene extends Phaser.Scene {
     const choiceStartY = this.panelY + 22 + this.bodyText.height + 8;
 
     node.choices.forEach((choice, i) => {
-      const btn = this.add.text(12, choiceStartY + i * 18, `${i + 1}. ${choice.label}`, {
-        fontSize: '7px', fontFamily: 'monospace',
+      const btn = this.add.text(12, choiceStartY + i * 22, `${i + 1}. ${choice.label}`, {
+        fontSize: '11px', fontFamily: 'Arial, sans-serif',
         color: '#aaddff', stroke: '#000000', strokeThickness: 2,
         backgroundColor: '#112233bb',
         padding: { x: 5, y: 3 }

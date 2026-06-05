@@ -9,8 +9,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
 
     // Name label above sprite
     this.nameText = scene.add.text(x, y - 18, name, {
-      fontSize: '7px',
-      fontFamily: 'monospace',
+      fontSize: '11px',
+      fontFamily: 'Arial, sans-serif',
       color: '#ffffff',
       stroke: '#000000',
       strokeThickness: 2
@@ -18,8 +18,8 @@ export default class NPC extends Phaser.GameObjects.Sprite {
 
     // Interaction hint
     this.interactHint = scene.add.text(x, y - 26, 'E交互', {
-      fontSize: '6px',
-      fontFamily: 'monospace',
+      fontSize: '10px',
+      fontFamily: 'Arial, sans-serif',
       color: '#ffff00',
       stroke: '#000000',
       strokeThickness: 2,
