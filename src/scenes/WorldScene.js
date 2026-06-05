@@ -300,6 +300,28 @@ export default class WorldScene extends Phaser.Scene {
     TriggerSystem.check(this);
   }
 
+  // 世界事件浮动提示：在世界坐标 (wx, wy) 显示文字后淡出
+  showWorldEvent(msg, wx, wy) {
+    const txt = this.add.text(wx, wy, msg, {
+      fontSize: '9px',
+      fontFamily: 'monospace',
+      color: '#ffffaa',
+      stroke: '#000000',
+      strokeThickness: 3,
+      backgroundColor: '#00000099',
+      padding: { x: 5, y: 3 }
+    }).setOrigin(0.5).setDepth(20);
+
+    this.tweens.add({
+      targets: txt,
+      y: wy - 30,
+      alpha: 0,
+      duration: 2500,
+      ease: 'Power2',
+      onComplete: () => txt.destroy()
+    });
+  }
+
   _updateStatus() {
     const elderRel = RelationSystem.get('elder');
     const hunterRel = RelationSystem.get('hunter');

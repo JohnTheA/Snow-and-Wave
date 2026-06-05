@@ -9,6 +9,7 @@ const config = {
   backgroundColor: '#1a1a2e',
   pixelArt: true,
   antialias: false,
+  zoom: 2,
   physics: {
     default: 'arcade',
     arcade: { gravity: { y: 0 }, debug: false }

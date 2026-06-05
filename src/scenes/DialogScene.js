@@ -58,9 +58,10 @@ export default class DialogScene extends Phaser.Scene {
     // ESC to close
     this.input.keyboard.once('keydown-ESC', () => this.closeDialog());
 
-    // Render starting node
+    // Render starting node — use dynamic getStart() if available
     if (this.npcDef) {
-      this.showNode(this.npcDef.start);
+      const startNode = this.npcDef.getStart ? this.npcDef.getStart() : this.npcDef.start;
+      this.showNode(startNode);
     } else {
       this.closeDialog();
     }
