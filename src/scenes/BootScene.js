@@ -5,156 +5,119 @@ export default class BootScene extends Phaser.Scene {
 
   create() {
     const g = this.add.graphics();
+    const W = 24, H = 32;
 
-    // Helper to render a 16x16 pixel array into a texture
-    const makeTex = (key, pixels) => {
+    const make = (key, drawFn) => {
       g.clear();
-      pixels.forEach((row, y) => {
-        row.forEach((col, x) => {
-          if (col) {
-            g.fillStyle(col, 1);
-            g.fillRect(x, y, 1, 1);
-          }
-        });
-      });
-      g.generateTexture(key, 16, 16);
+      drawFn(g);
+      g.generateTexture(key, W, H);
     };
 
-    // ── player (ocean person) ─────────────────────────────────────
-    const T = 0x00d4ff; // teal body
-    const S = 0x0080aa; // dark teal shadow
-    const F = 0xffe0b2; // face/skin
-    const H = 0x004488; // hair dark blue
-    const _ = null;
-    makeTex('player', [
-      [_,_,_,_,_,_,H,H,H,H,_,_,_,_,_,_],
-      [_,_,_,_,_,H,F,F,F,F,H,_,_,_,_,_],
-      [_,_,_,_,_,H,F,F,F,F,H,_,_,_,_,_],
-      [_,_,_,_,_,H,F,0x222255,F,0x222255,F,H,_,_,_,_],
-      [_,_,_,_,_,H,F,F,F,F,H,_,_,_,_,_],
-      [_,_,_,_,_,_,H,H,H,H,_,_,_,_,_,_],
-      [_,_,_,_,T,T,T,T,T,T,T,T,_,_,_,_],
-      [_,_,_,S,T,T,T,T,T,T,T,T,S,_,_,_],
-      [_,_,_,S,T,T,T,T,T,T,T,T,S,_,_,_],
-      [_,_,_,S,T,T,T,T,T,T,T,T,S,_,_,_],
-      [_,_,S,S,T,T,T,T,T,T,T,T,S,S,_,_],
-      [_,_,S,_,_,_,T,T,T,T,_,_,_,S,_,_],
-      [_,_,S,_,_,_,T,T,T,T,_,_,_,S,_,_],
-      [_,_,_,_,_,_,S,S,S,S,_,_,_,_,_,_],
-      [_,_,_,_,_,_,S,_,_,S,_,_,_,_,_,_],
-      [_,_,_,_,_,_,S,_,_,S,_,_,_,_,_,_],
-    ]);
+    // ── 主角：海洋人（蓝绿色，有海洋纹路）─────────────────────────
+    make('player', g => {
+      // 身体
+      g.fillStyle(0x00bcd4); g.fillRoundedRect(6, 14, 12, 12, 3);
+      // 头
+      g.fillStyle(0x80deea); g.fillCircle(12, 10, 7);
+      // 眼睛
+      g.fillStyle(0x004d66); g.fillCircle(9, 9, 2); g.fillCircle(15, 9, 2);
+      g.fillStyle(0xffffff); g.fillCircle(9.5, 8.5, 0.8); g.fillCircle(15.5, 8.5, 0.8);
+      // 腮帮（海洋纹路）
+      g.fillStyle(0x4dd0e1, 0.6); g.fillRect(4, 11, 3, 2); g.fillRect(17, 11, 3, 2);
+      // 腿
+      g.fillStyle(0x0097a7); g.fillRect(7, 25, 4, 6); g.fillRect(13, 25, 4, 6);
+      // 手臂
+      g.fillRect(2, 15, 4, 8); g.fillRect(18, 15, 4, 8);
+    });
 
-    // ── elder ─────────────────────────────────────────────────────
-    const W = 0xeeeeee; // white robe
-    const GR= 0xaaaaaa; // gray
-    const EF= 0xffe0b2;
-    makeTex('npc_elder', [
-      [_,_,_,_,_,_,GR,GR,GR,GR,_,_,_,_,_,_],
-      [_,_,_,_,_,GR,EF,EF,EF,EF,GR,_,_,_,_,_],
-      [_,_,_,_,_,GR,EF,EF,EF,EF,GR,_,_,_,_,_],
-      [_,_,_,_,_,GR,GR,GR,GR,GR,GR,_,_,_,_,_],
-      [_,_,_,_,_,GR,EF,EF,EF,EF,GR,_,_,_,_,_],
-      [_,_,_,_,_,_,GR,GR,GR,GR,_,_,_,_,_,_],
-      [_,_,_,_,W,W,W,W,W,W,W,W,_,_,_,_],
-      [_,_,_,GR,W,W,W,W,W,W,W,W,GR,_,_,_],
-      [_,_,_,GR,W,W,W,W,W,W,W,W,GR,_,_,_],
-      [_,_,_,GR,W,W,W,W,W,W,W,W,GR,_,_,_],
-      [_,_,GR,W,W,W,W,W,W,W,W,W,W,GR,_,_],
-      [_,_,GR,_,_,W,W,W,W,W,W,_,_,GR,_,_],
-      [_,_,GR,_,_,W,W,W,W,W,W,_,_,GR,_,_],
-      [_,_,_,_,_,GR,GR,GR,GR,GR,GR,_,_,_,_,_],
-      [_,_,_,_,_,GR,_,_,_,_,GR,_,_,_,_,_],
-      [_,_,_,_,_,GR,_,_,_,_,GR,_,_,_,_,_],
-    ]);
+    // ── 村长（白发白袍，慈祥）──────────────────────────────────────
+    make('npc_elder', g => {
+      // 袍子
+      g.fillStyle(0xeceff1); g.fillRoundedRect(5, 14, 14, 14, 3);
+      // 头
+      g.fillStyle(0xffe0b2); g.fillCircle(12, 10, 7);
+      // 白发
+      g.fillStyle(0xffffff); g.fillCircle(12, 5, 5);
+      g.fillRect(5, 7, 5, 5); g.fillRect(14, 7, 5, 5);
+      // 眼睛（眯眼）
+      g.fillStyle(0x5d4037);
+      g.fillRect(8, 9, 3, 1.5); g.fillRect(13, 9, 3, 1.5);
+      // 胡须
+      g.fillStyle(0xffffff); g.fillRect(8, 13, 8, 2);
+      // 拐杖
+      g.fillStyle(0x8d6e63); g.fillRect(20, 12, 2, 16);
+      g.fillRect(18, 12, 6, 2);
+      // 腿
+      g.fillStyle(0xbdbdbd); g.fillRect(7, 27, 4, 5); g.fillRect(13, 27, 4, 5);
+    });
 
-    // ── hunter ───────────────────────────────────────────────────
-    const BR= 0x8B4513;
-    const LB= 0xcd853f;
-    const HF= 0xffe0b2;
-    makeTex('npc_hunter', [
-      [_,_,_,_,_,_,BR,BR,BR,BR,_,_,_,_,_,_],
-      [_,_,_,_,_,BR,HF,HF,HF,HF,BR,_,_,_,_,_],
-      [_,_,_,_,_,BR,HF,HF,HF,HF,BR,_,_,_,_,_],
-      [_,_,_,_,_,BR,HF,0x333,HF,0x333,HF,BR,_,_,_,_],
-      [_,_,_,_,_,BR,HF,HF,HF,HF,BR,_,_,_,_,_],
-      [_,_,_,_,_,_,BR,BR,BR,BR,_,_,_,_,_,_],
-      [_,_,_,_,LB,LB,LB,LB,LB,LB,LB,LB,_,_,_,_],
-      [_,_,_,BR,LB,LB,LB,LB,LB,LB,LB,LB,BR,_,_,_],
-      [_,_,_,BR,LB,LB,LB,LB,LB,LB,LB,LB,BR,_,_,_],
-      [_,_,_,BR,LB,LB,LB,LB,LB,LB,LB,LB,BR,_,_,_],
-      [_,_,BR,BR,LB,LB,LB,LB,LB,LB,LB,LB,BR,BR,_,_],
-      [_,_,BR,_,_,_,LB,LB,LB,LB,_,_,_,BR,_,_],
-      [_,_,BR,_,_,_,LB,LB,LB,LB,_,_,_,BR,_,_],
-      [_,_,_,_,_,_,BR,BR,BR,BR,_,_,_,_,_,_],
-      [_,_,_,_,_,_,BR,_,_,BR,_,_,_,_,_,_],
-      [_,_,_,_,_,_,BR,_,_,BR,_,_,_,_,_,_],
-    ]);
+    // ── 猎人（皮草，强壮）─────────────────────────────────────────
+    make('npc_hunter', g => {
+      // 皮草外套
+      g.fillStyle(0x6d4c41); g.fillRoundedRect(4, 14, 16, 13, 3);
+      // 皮草纹理
+      g.fillStyle(0x4e342e, 0.4);
+      g.fillRect(4, 15, 16, 2); g.fillRect(4, 19, 16, 2); g.fillRect(4, 23, 16, 2);
+      // 头
+      g.fillStyle(0xffe0b2); g.fillCircle(12, 10, 7);
+      // 帽子
+      g.fillStyle(0x4e342e); g.fillRect(5, 4, 14, 5); g.fillRect(3, 8, 18, 3);
+      // 眼睛（锐利）
+      g.fillStyle(0x333333);
+      g.fillTriangle(7, 10, 11, 10, 9, 8); g.fillTriangle(13, 10, 17, 10, 15, 8);
+      // 弓（装饰）
+      g.fillStyle(0x8d6e63); g.fillRect(21, 8, 2, 18);
+      g.lineStyle(1.5, 0x5d4037); g.beginPath();
+      g.moveTo(21, 8); g.lineTo(23, 16); g.lineTo(21, 26); g.strokePath();
+      // 腿
+      g.fillStyle(0x4e342e); g.fillRect(6, 26, 5, 6); g.fillRect(13, 26, 5, 6);
+    });
 
-    // ── reindeer ──────────────────────────────────────────────────
-    const RB= 0x8B5E3C;
-    const RD= 0x5C3A1E;
-    const RN= 0xd2a679;
-    makeTex('npc_reindeer', [
-      [_,_,RD,_,_,_,_,_,_,_,_,_,RD,_,_,_],
-      [_,RD,RD,RD,_,_,_,_,_,_,RD,RD,RD,_,_,_],
-      [_,_,RD,RD,_,_,_,_,_,_,RD,RD,_,_,_,_],
-      [_,_,_,RN,RN,RN,RN,RN,RN,RN,RN,_,_,_,_,_],
-      [_,_,_,RN,RB,RB,RB,RB,RB,RB,RN,_,_,_,_,_],
-      [_,_,_,RB,RB,RB,RB,RB,RB,RB,RB,_,_,_,_,_],
-      [_,_,_,RB,RB,RB,RB,RB,RB,RB,RB,_,_,_,_,_],
-      [_,_,RB,RB,RB,RB,RB,RB,RB,RB,RB,RB,_,_,_,_],
-      [_,_,RB,RB,RB,RB,RB,RB,RB,RB,RB,RB,_,_,_,_],
-      [_,_,RB,RB,RB,RB,RB,RB,RB,RB,RB,RB,_,_,_,_],
-      [_,_,RD,RB,RB,RB,RB,RB,RB,RB,RB,RD,_,_,_,_],
-      [_,_,RD,RD,_,_,RB,RB,RB,RB,RD,RD,_,_,_,_],
-      [_,_,_,RD,_,_,RD,RD,RD,RD,_,RD,_,_,_,_],
-      [_,_,_,RD,_,_,RD,_,_,RD,_,RD,_,_,_,_],
-      [_,_,_,RD,_,_,RD,_,_,RD,_,RD,_,_,_,_],
-      [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-    ]);
+    // ── 驯鹿（棕色，鹿角）────────────────────────────────────────
+    make('npc_reindeer', g => {
+      // 身体
+      g.fillStyle(0x8d6e63); g.fillEllipse(12, 20, 16, 12);
+      // 头
+      g.fillStyle(0xa1887f); g.fillCircle(12, 11, 6);
+      // 鹿角
+      g.lineStyle(2, 0x5d4037);
+      g.beginPath(); g.moveTo(9, 6); g.lineTo(5, 1); g.strokePath();
+      g.beginPath(); g.moveTo(5, 1); g.lineTo(2, 3); g.strokePath();
+      g.beginPath(); g.moveTo(5, 1); g.lineTo(4, -1); g.strokePath();
+      g.beginPath(); g.moveTo(15, 6); g.lineTo(19, 1); g.strokePath();
+      g.beginPath(); g.moveTo(19, 1); g.lineTo(22, 3); g.strokePath();
+      g.beginPath(); g.moveTo(19, 1); g.lineTo(20, -1); g.strokePath();
+      // 鼻子（红色）
+      g.fillStyle(0xff5252); g.fillCircle(12, 14, 2.5);
+      // 眼睛
+      g.fillStyle(0x3e2723); g.fillCircle(9, 10, 1.5); g.fillCircle(15, 10, 1.5);
+      // 腿
+      g.fillStyle(0x6d4c41);
+      g.fillRect(6, 25, 3, 7); g.fillRect(10, 25, 3, 7);
+      g.fillRect(14, 25, 3, 7); // 只画3条腿，透视感
+    });
 
-    // ── child ─────────────────────────────────────────────────────
-    const CF= 0xffe0b2;
-    const CJ= 0xff6699; // pink jacket
-    const CS= 0xcc3366;
-    makeTex('npc_child', [
-      [_,_,_,_,_,_,CS,CS,CS,CS,_,_,_,_,_,_],
-      [_,_,_,_,_,CS,CF,CF,CF,CF,CS,_,_,_,_,_],
-      [_,_,_,_,_,CS,CF,CF,CF,CF,CS,_,_,_,_,_],
-      [_,_,_,_,_,CS,CF,0x333,CF,0x333,CF,CS,_,_,_,_],
-      [_,_,_,_,_,CS,CF,CF,CF,CF,CS,_,_,_,_,_],
-      [_,_,_,_,_,_,CS,CS,CS,CS,_,_,_,_,_,_],
-      [_,_,_,_,_,CJ,CJ,CJ,CJ,CJ,CJ,_,_,_,_,_],
-      [_,_,_,CS,CJ,CJ,CJ,CJ,CJ,CJ,CJ,CS,_,_,_,_],
-      [_,_,_,CS,CJ,CJ,CJ,CJ,CJ,CJ,CJ,CS,_,_,_,_],
-      [_,_,_,CS,CJ,CJ,CJ,CJ,CJ,CJ,CJ,CS,_,_,_,_],
-      [_,_,CS,CJ,CJ,CJ,CJ,CJ,CJ,CJ,CJ,CJ,CS,_,_,_],
-      [_,_,_,_,_,_,CJ,CJ,CJ,CJ,_,_,_,_,_,_],
-      [_,_,_,_,_,_,CJ,CJ,CJ,CJ,_,_,_,_,_,_],
-      [_,_,_,_,_,_,CS,CS,CS,CS,_,_,_,_,_,_],
-      [_,_,_,_,_,_,CS,_,_,CS,_,_,_,_,_,_],
-      [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-    ]);
-
-    // ── tiles tileset (64x16: 4 tiles side by side) ───────────────
-    // tile 0 = snow, tile 1 = path, tile 2 = water, tile 3 = house base
-    g.clear();
-    // snow tile (0)
-    g.fillStyle(0xddeeff, 1); g.fillRect(0, 0, 16, 16);
-    g.fillStyle(0xffffff, 1); g.fillRect(2, 2, 2, 2); g.fillRect(9, 5, 2, 2); g.fillRect(5, 10, 2, 2);
-    // path tile (16)
-    g.fillStyle(0x99aabb, 1); g.fillRect(16, 0, 16, 16);
-    g.fillStyle(0x7788aa, 1); g.fillRect(18, 3, 2, 2); g.fillRect(24, 9, 2, 2);
-    // water tile (32)
-    g.fillStyle(0x1155cc, 1); g.fillRect(32, 0, 16, 16);
-    g.fillStyle(0x3377ee, 1); g.fillRect(33, 3, 3, 2); g.fillRect(37, 8, 4, 2); g.fillRect(42, 4, 3, 2);
-    g.fillStyle(0x88bbff, 1); g.fillRect(34, 4, 1, 1); g.fillRect(40, 9, 1, 1);
-    // house tile (48)
-    g.fillStyle(0x8B5E3C, 1); g.fillRect(48, 0, 16, 16);
-    g.fillStyle(0x5C3A1E, 1); g.fillRect(50, 2, 5, 6); g.fillRect(57, 2, 5, 6);
-    g.fillStyle(0xffe0b2, 1); g.fillRect(52, 8, 8, 6);
-    g.generateTexture('tiles', 64, 16);
+    // ── 雪娃（粉色小女孩）────────────────────────────────────────
+    make('npc_child', g => {
+      // 雪地外套（粉色）
+      g.fillStyle(0xf48fb1); g.fillRoundedRect(7, 16, 10, 11, 3);
+      // 头
+      g.fillStyle(0xffe0b2); g.fillCircle(12, 10, 6);
+      // 双马尾
+      g.fillStyle(0xffcc02);
+      g.fillCircle(6, 8, 4); g.fillCircle(18, 8, 4);
+      g.fillStyle(0xffe0b2); g.fillCircle(12, 10, 6); // 覆盖中间
+      // 围巾
+      g.fillStyle(0xff4081); g.fillRect(7, 16, 10, 3);
+      // 眼睛（大眼睛）
+      g.fillStyle(0x4a148c); g.fillCircle(9.5, 9.5, 2.2); g.fillCircle(14.5, 9.5, 2.2);
+      g.fillStyle(0xffffff); g.fillCircle(10, 9, 0.8); g.fillCircle(15, 9, 0.8);
+      // 笑脸
+      g.lineStyle(1.2, 0xd84315);
+      g.beginPath(); g.arc(12, 12, 2.5, 0.2, Math.PI - 0.2); g.strokePath();
+      // 腿
+      g.fillStyle(0xce93d8); g.fillRect(8, 26, 4, 6); g.fillRect(12, 26, 4, 6);
+    });
 
     g.destroy();
     this.scene.start('WorldScene');
