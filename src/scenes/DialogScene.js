@@ -11,37 +11,33 @@ export default class DialogScene extends Phaser.Scene {
     this.npcId = data.npcId;
     this.npcDef = npcData[this.npcId];
     this.choiceButtons = [];
-    this.W = 480;
-    this.H = 270;
-    this.panelH = 130;
+    this.W = 800;
+    this.H = 500;
+    this.panelH = 180;
     this.panelY = this.H - this.panelH;
   }
 
   create() {
     const { W, H, panelH, panelY } = this;
 
-    // 半透明面板
     const gfx = this.add.graphics();
-    gfx.fillStyle(0x000011, 0.88);
+    gfx.fillStyle(0x000e1a, 0.92);
     gfx.fillRect(0, panelY, W, panelH);
-    gfx.lineStyle(1, 0x4499cc, 1);
-    gfx.strokeRect(1, panelY + 1, W - 2, panelH - 2);
+    gfx.lineStyle(2, 0x4499cc, 1);
+    gfx.strokeRect(2, panelY + 2, W - 4, panelH - 4);
 
-    // NPC名字
-    this.nameText = this.add.text(10, panelY + 7, '', {
-      fontSize: '14px', fontFamily: 'Arial, sans-serif',
+    this.nameText = this.add.text(20, panelY + 14, '', {
+      fontSize: '18px', fontFamily: 'Arial, sans-serif',
       color: '#88ddff', stroke: '#000000', strokeThickness: 2
     });
 
-    // 对话内容
-    this.bodyText = this.add.text(10, panelY + 22, '', {
-      fontSize: '12px', fontFamily: 'Arial, sans-serif',
-      color: '#eeeeff', wordWrap: { width: W - 20 }, lineSpacing: 3
+    this.bodyText = this.add.text(20, panelY + 42, '', {
+      fontSize: '14px', fontFamily: 'Arial, sans-serif',
+      color: '#eeeeff', wordWrap: { width: W - 40 }, lineSpacing: 5
     });
 
-    // ESC提示
-    this.add.text(W - 6, panelY + 6, 'ESC关闭', {
-      fontSize: '10px', fontFamily: 'Arial, sans-serif', color: '#556677'
+    this.add.text(W - 14, panelY + 12, 'ESC 关闭', {
+      fontSize: '11px', fontFamily: 'Arial, sans-serif', color: '#445566'
     }).setOrigin(1, 0);
 
     this.input.keyboard.once('keydown-ESC', () => this.closeDialog());
@@ -65,14 +61,14 @@ export default class DialogScene extends Phaser.Scene {
     this.nameText.setText(this.npcDef.name);
     this.bodyText.setText(node.text);
 
-    const choiceStartY = this.panelY + 22 + this.bodyText.height + 8;
+    const choiceStartY = this.panelY + 42 + this.bodyText.height + 12;
 
     node.choices.forEach((choice, i) => {
-      const btn = this.add.text(12, choiceStartY + i * 22, `${i + 1}. ${choice.label}`, {
-        fontSize: '11px', fontFamily: 'Arial, sans-serif',
+      const btn = this.add.text(20, choiceStartY + i * 28, i + 1 + '.  ' + choice.label, {
+        fontSize: '13px', fontFamily: 'Arial, sans-serif',
         color: '#aaddff', stroke: '#000000', strokeThickness: 2,
-        backgroundColor: '#112233bb',
-        padding: { x: 5, y: 3 }
+        backgroundColor: '#0a2240cc',
+        padding: { x: 10, y: 5 }
       }).setInteractive({ useHandCursor: true });
 
       btn.on('pointerover', () => btn.setColor('#ffffff'));
@@ -81,7 +77,6 @@ export default class DialogScene extends Phaser.Scene {
       this.choiceButtons.push(btn);
     });
 
-    // 数字键快捷键
     ['ONE', 'TWO', 'THREE'].forEach((key, i) => {
       const k = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[key]);
       k.once('down', () => { if (node.choices[i]) this.executeChoice(node.choices[i]); });

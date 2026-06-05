@@ -88,7 +88,7 @@ const TriggerSystem = {
         scene.villageEntranceX,
         scene.villageEntranceY,
         '⚔ 村庄守护者',
-        { fontSize: '11px', fontFamily: 'Arial, sans-serif', color: '#ffcc00',
+        { fontSize: '13px', fontFamily: 'Arial, sans-serif', color: '#ffcc00',
           stroke: '#000000', strokeThickness: 2 }
       ).setOrigin(0.5).setDepth(5);
       // 全体NPC暖色

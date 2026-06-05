@@ -5,13 +5,12 @@ import DialogScene from './scenes/DialogScene.js';
 const config = {
   type: Phaser.AUTO,
   backgroundColor: '#1a1a2e',
-  pixelArt: true,
-  antialias: false,
+  antialias: true,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: 480,
-    height: 270,
+    width: 800,
+    height: 500,
   },
   physics: {
     default: 'arcade',
